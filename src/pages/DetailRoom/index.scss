@@ -1,0 +1,53 @@
+.detail-room-page {
+  .carousel {
+    display: flex;
+    justify-content: center;
+
+    .ant-carousel {
+      display: flex;
+      justify-content: center;
+      max-width: 1000px;
+    }
+  }
+
+  @media (max-width: 1175px) {
+    .carousel {
+      display: block;
+    }
+  }
+}
+
+.div-1 {
+  > h1 {
+    font-size: 22px;
+    color: #003c4c;
+    font-weight: 900;
+  }
+
+  > p {
+    font-size: 16px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #707070;
+    margin: 20px 0 40px 0;
+  }
+
+  .service {
+    > span {
+      font-size: 24px;
+      font-weight: 900;
+      color: #191919;
+    }
+    > ul {
+      list-style: disc;
+      margin-left: 20px;
+      padding-left: 20px;
+      li {
+        color: #707070;
+        font-size: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+        display: list-item;
+        font-weight: 300;
+      }
+    }
+  }
+}

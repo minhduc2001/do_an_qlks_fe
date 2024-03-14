@@ -1,0 +1,40 @@
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  color: #003c4c;
+  background-color: #dadada;
+
+  .div1 {
+    width: 1152px;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  span {
+    font-size: 19px;
+    margin-bottom: 20px;
+    font-weight: 600;
+  }
+
+  ul li {
+    font-size: 15px;
+    padding: 0 0 20px;
+  }
+
+  ul li:first-child {
+    margin-top: 20px;
+  }
+
+  > p {
+    margin-bottom: 80px;
+  }
+
+  ul li span {
+    font-size: 15px;
+    // margin-bottom: 20px;
+
+    font-weight: 600;
+  }
+}

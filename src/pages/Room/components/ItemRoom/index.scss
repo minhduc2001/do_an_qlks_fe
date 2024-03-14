@@ -1,0 +1,24 @@
+.root {
+  padding: 25px;
+}
+
+.list-feature {
+  font-weight: bold;
+  p {
+    margin-left: 8px;
+  }
+}
+
+.link {
+  margin-top: 20px;
+  color: #003c4c;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  text-decoration: underline;
+  svg {
+    width: 8px;
+    height: 8px;
+  }
+}

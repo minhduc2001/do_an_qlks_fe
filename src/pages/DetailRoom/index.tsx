@@ -43,7 +43,11 @@ export default function DetailRoom() {
 
   return (
     <div className="detail-room-page">
-      <SubHeader title="" description="" image={room?.images?.[0]} />
+      <SubHeader
+        title={room?.name ?? ""}
+        description=""
+        image={room?.images?.[0]}
+      />
       <div className="px-20 py-10">
         <div className="px-20 flex justify-center">
           <AsNavFor images={room?.images ?? []} />

@@ -46,6 +46,7 @@ export default function Room() {
       <SubHeader
         title="Phòng Nghỉ"
         description="268 Phòng nghỉ cao cấp với thiết kế theo phong cách đương đại phóng khoáng và thời thượng, được trang bị đầy đủ tiện nghi hiện đại đảm bảo mang đến cho du khách những phút giây nghỉ ngơi, thư giãn tuyệt vời"
+        image="https://ninhbinhlegendhotel.com/wp-content/uploads/2023/02/CAR_6931-scaled.jpg"
       ></SubHeader>
       <div className="px-20 py-10">
         <h1 className="text-center mb-3 text-[#333] text-[1.8em] font-normal">

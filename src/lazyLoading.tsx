@@ -9,6 +9,7 @@ const DetailRoom = React.lazy(() => import("@/pages/DetailRoom"));
 const Service = React.lazy(() => import("@/pages/Service"));
 const Promotion = React.lazy(() => import("@/pages/Promotion"));
 const Thanks = React.lazy(() => import("@/pages/Thanks"));
+const Contact = React.lazy(() => import("@/pages/Contact"));
 // import PageNotFound from "@/pages/404";
 // import Home from "@/pages/Home";
 // import About from "@/pages/About";
@@ -61,5 +62,10 @@ export const PUBLIC_ROUTES = [
     path: "/promotion",
     component: Promotion,
     name: "Khuyến mại",
+  },
+  {
+    path: "/contact",
+    component: Contact,
+    name: "Liên hệ",
   },
 ];

@@ -1,0 +1,30 @@
+.contact {
+  padding: 40px 8% 0;
+
+  span {
+    color: #003c4c;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 28px;
+  }
+
+  p {
+    margin-top: 30px;
+    color: #020101;
+    font-family: "Arial", Arial;
+    font-size: 15px;
+    font-weight: 300;
+    width: 100%;
+  }
+
+  > span {
+    color: #003c4c;
+    font-family: "Arial", Arial;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-left: 30px;
+    display: block;
+    margin-bottom: 30px;
+  }
+}

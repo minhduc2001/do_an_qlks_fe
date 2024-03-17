@@ -10,10 +10,11 @@ export default function Service() {
 
   return (
     <div className="room-page">
+      <SubHeader
+        title="Dịch vụ"
+        image="https://ninhbinhlegendhotel.com/wp-content/uploads/2022/09/CAR_6689-scaled.jpg"
+      ></SubHeader>
       <div className="px-20 py-10">
-        <h1 className="text-center mb-3 text-[#333] text-[1.8em] font-normal">
-          DỊCH VU TIỆN ÍCH
-        </h1>
         <div className="flex justify-center">
           <Row gutter={[16, 24]} className="w-[1200px]">
             {services?.results.map((item, i) => (

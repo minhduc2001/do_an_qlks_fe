@@ -6,12 +6,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
 import AsNavFor from "./AsForNav/AsForNav";
 import SubHeader from "@/components/SubHeader/SubHeader";
+import { FaSquare, FaUsers } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
+import { FaBed } from "react-icons/fa";
+import { FaRegSquare } from "react-icons/fa";
+import { FaRegClock } from "react-icons/fa";
+import { FaClock } from "react-icons/fa";
+import ModalOrderRoom from "@/components/ModalOrderRoom";
+import ApiUser from "@/api/ApiUser";
+import ModalNotiLogin from "@/components/ModalNotiLogin";
 
 export default function DetailRoom() {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [roomSelected, setRoomSelected] = useState<IRoomRes>();
+  const [isOpenModal1, setIsOpenModal1] = useState(false);
 
-  const navigate = useNavigate();
   const { id: slug = "" } = useParams();
 
   const { data: room } = useQuery(
@@ -20,19 +28,17 @@ export default function DetailRoom() {
     { enabled: !!slug }
   );
 
-  const { data: rooms } = useQuery(["get_rooms_1"], () => ApiRoom.getRooms());
-
-  const displayRooms = useMemo(() => {
-    return rooms?.results.filter((item) => item.slug !== slug);
-  }, [rooms, slug]);
-
-  const openDetail = (slug: string) => {
-    navigate(`/room/${slug}`);
-  };
-
   const handleCloseModal = () => {
     setIsOpenModal(false);
-    setRoomSelected(undefined);
+  };
+
+  const handleCloseModal1 = () => {
+    setIsOpenModal1(false);
+  };
+
+  const handleClick = () => {
+    if (!ApiUser.isLogin()) return setIsOpenModal1(true);
+    setIsOpenModal(true);
   };
 
   return (
@@ -55,11 +61,7 @@ export default function DetailRoom() {
                 <div className="service">
                   <span>Giá bao gồm các dịch vụ:</span>
                   <ul>
-                    {[
-                      { name: "hahha" },
-                      { name: "hahha" },
-                      { name: "hahha" },
-                    ].map((ft, index) => {
+                    {room?.feature_rooms?.map((ft, index) => {
                       return <li key={index}>{ft.name}</li>;
                     })}
                   </ul>
@@ -67,30 +69,66 @@ export default function DetailRoom() {
               </div>
             </Col>
             <Col span={12}>
-              <div className="bg-[#FAF7F2] w-full h-[490px]">
+              <div className="bg-[#FAF7F2] w-full  div-2">
                 <div>
                   <img src="" alt="" />
-                  <div>
-                    <span>1.870.000</span>
+                  <div className="div-info-price">
+                    <span>{room?.price?.toLocaleString()} đ</span>
                     <p>
                       Giá trên đã bao gồm VAT & Phí phục vụ, chưa bao gồm phụ
-                      thu ngày Lễ tết
                     </p>
+
+                    <div className="div-info-room">
+                      <ul>
+                        <li>
+                          <FaUsers />
+                          <span>Người lớn</span>
+                        </li>
+                        <li>
+                          <FaEye />
+                          <span>
+                            Chứa tối đa : Hai người lớn, một trẻ em dưới 6 tuổi
+                          </span>
+                        </li>
+                        <li>
+                          <FaSquare />
+                          <span>Diện tích: 35m²</span>
+                        </li>
+                        <li>
+                          <FaBed />
+                          <span>Loại giường: Giường cỡ lớn (2.2m x 2.2m)</span>
+                        </li>
+                        <li>
+                          <FaRegClock />
+                          <span>Check in: 02:00p.m</span>
+                        </li>
+                        <li>
+                          <FaClock />
+                          <span>Check out: 12:00p.m</span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
+                <button onClick={handleClick}>Đặt phòng ngay</button>
               </div>
             </Col>
           </Row>
         </div>
       </div>
 
-      {/* {roomSelected && (
+      {room && (
         <ModalOrderRoom
           isOpenModal={isOpenModal}
           handleCloseModal={handleCloseModal}
-          roomSelected={roomSelected}
+          roomSelected={room}
         />
-      )} */}
+      )}
+
+      <ModalNotiLogin
+        isOpenModal={isOpenModal1}
+        handleCloseModal={handleCloseModal1}
+      />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 .header {
   position: relative;
+  z-index: 999;
   // background-image: url("https://www.pistachiohotel.com/images/banner.jpg");
   background-color: #595959;
   // background-position: center center;
@@ -25,10 +26,10 @@
   .nav-list {
     position: fixed;
     top: 0;
-    background-color: #595959;
+    background-color: #c4c1c1;
 
     &.scrolled {
-      background-color: #595959;
+      background-color: #e0e0e0;
       z-index: 1000;
       box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
     }
@@ -53,5 +54,16 @@
         color: #fcb134 !important;
       }
     }
+
+    .nav-item:first-child {
+      padding: unset;
+    }
   }
+}
+
+.group-button {
+  display: flex;
+  flex-direction: column;
+  height: 70px;
+  justify-content: space-between;
 }

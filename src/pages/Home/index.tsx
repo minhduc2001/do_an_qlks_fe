@@ -3,7 +3,7 @@ import "./index.scss";
 import ButtonGlobal from "@/components/ButtonGlobal";
 import { useQuery } from "@tanstack/react-query";
 import { Carousel, Col, Image, Popover, Row } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ApiRoom from "@/api/ApiRoom";
 import ApiPromotion from "@/api/ApiPromotion";
 import moment from "moment";
@@ -33,43 +33,30 @@ export default function Hotel() {
 
   return (
     <div className="home-page">
-      {/* <div className="px-20 py-10 bg-[#f5f5f5]">
-        <div className="text-center mb-3">
-          <h3 className="text-[19px] spac">Khách sạn Thanh sơn</h3>
-          <h1 className="text-[#333] text-[1.8em] font-normal">
-            ỐC ĐẢO YÊN BÌNH GIỮA LÒNG SAPA
+      <div className="mt-10"></div>
+      <div className="flex justify-center px-20 py-10 bg-[#F3EEE7] div-info-top">
+        <div className="flex gap-6 p-4 w-[80%] flex-col">
+          <video
+            className="elementor-video mb-4"
+            src="https://ninhbinhlegendhotel.com/wp-content/uploads/2022/07/Sequence-01_5.mp4"
+            autoPlay
+            loop={true}
+            controls={true}
+            muted={true}
+            playsInline
+            controlsList=""
+          ></video>
+
+          <span>YOU COME AS A GUEST, YOU LEAVE AS A FRIEND</span>
+          <h1>
+            Ninh Binh Legend Hotel - Địa Điểm Dừng Chân Lý Tưởng Cho Mọi Hành
+            Trình
           </h1>
-        </div>
-        <div className="flex gap-4 border-[10px] border-[#8679513d] p-4">
-          <div className="flex-[1.5]">
-            <iframe
-              width="100%"
-              height="450"
-              src="https://www.youtube.com/embed/-AREhw2Ot3o?si=ftvtsCik7hkpWbyx"
-              frameBorder="0"
-              allowFullScreen
-            />
-          </div>
-          <div className="flex-[1]">
-            <p className="font-light">
-              <span className="inline-block mb-5">
-                Ẩn sâu trong những dãy núi hùng vĩ ở phía bắc của Việt Nam, Sapa
-                là một điểm đến khiến lòng của những người thợ du lịch bị mê
-                hoặc bởi vẻ đẹp của cảnh quan tuyệt đẹp, văn hóa dân tộc đa dạng
-                và khí hậu mát mẻ, thư thái. Trong số nhiều lựa chọn chỗ ở tại
-                thị trấn xinh đẹp này, có một địa điểm nổi bật, là nơi lý tưởng
-                cho những du khách khó tính tìm kiếm sự thoải mái, sự quyến rũ
-                và tầm nhìn không giới hạn.
-              </span>
-            </p>
-            <ButtonGlobal className="mt-4" onClick={openAboutPage}>
-              Xem chi tiết
-            </ButtonGlobal>
-          </div>
+          <Link to={"#"}>Tìm hiểu về chúng tôi</Link>
         </div>
       </div>
 
-      <div className="px-20 py-10">
+      {/* <div className="px-20 py-10">
         <div className="text-center mb-3">
           <h3 className="text-[19px] spac">Nổi bật</h3>
           <h1 className="text-[#333] text-[1.8em] font-normal">KHUYẾN MẠI</h1>
@@ -116,7 +103,7 @@ export default function Hotel() {
             ))}
           </Row>
         </div>
-      </div>
+      </div> */}
 
       <div className="px-20 py-10 bg-[#f5f5f5]">
         <div className="text-center mb-3">
@@ -126,33 +113,36 @@ export default function Hotel() {
           </h1>
         </div>
         <div className="carousel mb-5">
-          <Carousel className="w-[1000px] h-[500px] bg-[#333]" effect="fade">
-            {rooms?.results?.map((item, i) => (
-              <div key={i} className="relative">
-                <Image
-                  className="w-[1000px] h-[500px] object-cover"
-                  src={
-                    item.images?.[0] ??
-                    "https://www.pistachiohotel.com/UploadFile/Banner/home2.jpg"
-                  }
-                  preview={false}
-                />
-                <div className="absolute top-[50%] left-[50%] transform -translate-x-1/2 -translate-y-1/2 flex flex-col justify-center text-center text-[#fff] max-w-[400px] p-3 bg-[#0000004d]">
-                  <h2
-                    className="uppercase text-[#fff] font-bold cursor-pointer hover:text-[#fcb134]"
+          <Row className="w-[80%]" gutter={22}>
+            {rooms?.results?.map((item, i) => {
+              return (
+                <Col span={12} key={i}>
+                  <Image
+                    className="h-[500px] object-cover cursor-pointer"
+                    src={
+                      item.images?.[0] ??
+                      "https://www.pistachiohotel.com/UploadFile/Banner/home2.jpg"
+                    }
+                    preview={false}
                     onClick={() => openDetail(item.slug)}
-                  >
-                    {item.name ?? "Tên phòng đang chờ cập nhật"}
-                  </h2>
-                  <p>{item.description ?? "Mô tả phòng đang chờ cập nhật"}</p>
-                </div>
-              </div>
-            ))}
-          </Carousel>
+                  />
+                  <div className="div-info-room">
+                    <h2 onClick={() => openDetail(item.slug)}>
+                      {item.name ?? "Tên phòng đang chờ cập nhật"}
+                    </h2>
+                    <p>{item.description ?? "Mô tả phòng đang chờ cập nhật"}</p>
+                  </div>
+                </Col>
+              );
+            })}
+          </Row>
+          <span>
+            <Link to={"/room"}>Khám phá nhiều hơn</Link>
+          </span>
         </div>
       </div>
 
-      <div className="px-20 py-10">
+      {/* <div className="px-20 py-10">
         <div className="text-center mb-3">
           <h3 className="text-[19px] spac">Nổi bật</h3>
           <h1 className="text-[#333] text-[1.8em] font-normal">
@@ -196,9 +186,9 @@ export default function Hotel() {
             ))}
           </Row>
         </div>
-      </div>
+      </div> */}
 
-      <div className="px-20 py-10 bg-[#f5f5f5]">
+      {/* <div className="px-20 py-10 bg-[#f5f5f5]">
         <div className="text-center mb-3">
           <h3 className="text-[19px] spac">Bản đồ</h3>
           <h1 className="text-[#333] text-[1.8em] font-normal">

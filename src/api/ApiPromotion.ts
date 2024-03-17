@@ -29,9 +29,9 @@ export interface IGetPromotionsRes {
 }
 
 const getPromotions = (
-  params?: IGetPromotionsParams,
+  params?: IGetPromotionsParams
 ): Promise<IGetPromotionsRes> => {
-  return fetcher({ method: "get", url: "/promotion/list", params });
+  return fetcher({ method: "get", url: "/promotion", params });
 };
 
 export default {

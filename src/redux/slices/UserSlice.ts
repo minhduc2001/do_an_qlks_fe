@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
 import { IRootState } from "../store";
-import { ILoginRes } from "@/api/ApiUser";
+import { ILoginRes, IUserUpdate } from "@/api/ApiUser";
 
 const initialState: ILoginRes = {};
 
@@ -17,6 +17,9 @@ const UserSlice = createSlice({
     logoutUser: () => {
       return initialState;
     },
+    reloadUser: (state, action: PayloadAction<IUserUpdate>) => {
+      return { ...state, ...action, first_login: false };
+    },
   },
 });
 
@@ -25,7 +28,7 @@ const useGetUserRedux = () => {
 };
 
 // Action creators are generated for each case reducer function
-export const { loginUser, logoutUser } = UserSlice.actions;
+export const { loginUser, logoutUser, reloadUser } = UserSlice.actions;
 
 export { useGetUserRedux };
 

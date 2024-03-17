@@ -1,39 +1,43 @@
-import ApiUser, { ILoginBody, ILoginRes } from "@/api/ApiUser";
+import ApiUser, { ILoginBody, ILoginRes, IRegisterBody } from "@/api/ApiUser";
 import FormGlobal, {
   FormItemGlobal,
   InputFormikGlobal,
   InputPasswordFormikGlobal,
 } from "@/components/FormGlobal";
 import { loginUser } from "@/redux/slices/UserSlice";
-import { LoginValidation } from "@/utils/validation/login";
+import { RegisterValidation } from "@/utils/validation/login";
 import { useMutation } from "@tanstack/react-query";
 import { Spin } from "antd";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Register = () => {
   const dispatch = useDispatch();
-  const loginMutation = useMutation(ApiUser.login);
+  const registerMutation = useMutation(ApiUser.register);
 
-  const handleLogin = (values: ILoginBody): void => {
-    loginMutation.mutate(
-      { email: values.email, password: values.password },
+  const handleRegister = (values: IRegisterBody): void => {
+    registerMutation.mutate(
+      {
+        email: values.email,
+        password: values.password,
+        username: values.username,
+      },
       {
         onSuccess: (res: ILoginRes) => {
           dispatch(loginUser({ ...res }));
-          window.location.replace("/");
+          window.location.replace("/user");
         },
       }
     );
   };
 
   return (
-    <Spin tip="Loading..." size="large" spinning={loginMutation.isLoading}>
+    <Spin tip="Loading..." size="large" spinning={registerMutation.isLoading}>
       <Formik
-        initialValues={{ email: "", password: "" }}
-        validationSchema={LoginValidation}
-        onSubmit={handleLogin}
+        initialValues={{ email: "", password: "", username: "" }}
+        validationSchema={RegisterValidation}
+        onSubmit={handleRegister}
       >
         {({ handleSubmit }): JSX.Element => (
           <section className="flex flex-col md:flex-row h-[90vh] items-center w-[90%]">
@@ -44,7 +48,7 @@ const Login = () => {
             <div className="bg-white w-full md:max-w-md lg:max-w-full md:mx-auto md:mx-0 md:w-1/2 xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
               <div className="w-full h-100">
                 <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">
-                  Đăng nhập tài khoản
+                  Đăng ký tài khoản
                 </h1>
 
                 <FormGlobal
@@ -52,36 +56,47 @@ const Login = () => {
                   method="POST"
                   onFinish={handleSubmit}
                 >
-                  <FormItemGlobal name="email" label="Tài khoản" required>
+                  <FormItemGlobal
+                    name="username"
+                    label="Tên người dùng"
+                    required
+                  >
                     <InputFormikGlobal
-                      name="email"
-                      placeholder="Nhập tài khoản"
+                      name="username"
+                      placeholder="Nhập tên người dùng"
                     />
                   </FormItemGlobal>
 
-                  <div className="mt-4">
-                    <FormItemGlobal name="password" label="Mật khẩu" required>
-                      <InputPasswordFormikGlobal
-                        name="password"
-                        placeholder="Nhập mật khẩu"
-                      />
-                    </FormItemGlobal>
-                  </div>
+                  <FormItemGlobal name="email" label="Email" required>
+                    <InputFormikGlobal
+                      name="email"
+                      placeholder="user@example.com"
+                    />
+                  </FormItemGlobal>
 
-                  <div className="text-right mt-2">
-                    <a
-                      href="#"
-                      className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700"
-                    >
-                      Quên mật khẩu
-                    </a>
-                  </div>
+                  <FormItemGlobal name="password" label="Mật khẩu" required>
+                    <InputPasswordFormikGlobal
+                      name="password"
+                      placeholder="Nhập mật khẩu"
+                    />
+                  </FormItemGlobal>
+
+                  <FormItemGlobal
+                    name="re-password"
+                    label="Nhập lại mật khẩu"
+                    required
+                  >
+                    <InputPasswordFormikGlobal
+                      name="re-password"
+                      placeholder="Nhập lại mật khẩu"
+                    />
+                  </FormItemGlobal>
 
                   <button
                     type="submit"
                     className="w-full block bg-indigo-500 hover:bg-indigo-400 focus:bg-indigo-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
                   >
-                    Đăng nhập
+                    Đăng ký
                   </button>
                 </FormGlobal>
 
@@ -152,12 +167,12 @@ const Login = () => {
                 </div>
 
                 <p className="mt-8">
-                  Chưa có tài khoản?{" "}
+                  Đã có tài khoản?{" "}
                   <Link
-                    to={"/register"}
+                    to={"/login"}
                     className="text-blue-500 hover:text-blue-700 font-semibold"
                   >
-                    Đăng ký tại đây
+                    Đăng nhập
                   </Link>
                 </p>
               </div>
@@ -169,4 +184,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

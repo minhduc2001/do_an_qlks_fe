@@ -4,7 +4,6 @@ import { Col, Empty, Row } from "antd";
 import FormGlobal, {
   DatePickerFormikGlobal,
   FormItemGlobal,
-  SelectFormikGlobal,
 } from "../FormGlobal";
 import ModalGlobal from "../ModalGlobal";
 import moment, { Moment } from "moment";
@@ -12,9 +11,7 @@ import ApiRoom, { ICheckTypeRoom } from "@/api/ApiRoom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import ButtonGlobal from "../ButtonGlobal";
-import { CheckRoomValidation } from "@/utils/validation/room";
 import Notification from "../Notification";
-import { SearchOutlined } from "@ant-design/icons";
 
 interface ISearchValue {
   type_room_id?: number;
@@ -57,23 +54,13 @@ export default function ModalSearchRoom({
     checkTypeRoom.mutate(newValues);
   };
 
-  const { data: room_types } = useQuery(["get_room_types"], () =>
-    ApiRoom.getRooms()
-  );
-
-  const convertDataRoomTypes = useMemo(() => {
-    return room_types?.results.map((item) => ({
-      value: item.id,
-      label: item.name,
-    }));
-  }, [room_types]);
-
   return (
     <ModalGlobal
       open={isOpenModal}
       title="Kiểm tra phòng trống"
       onOk={onCancel}
       onCancel={onCancel}
+      width={1000}
     >
       <Formik
         innerRef={innerRef}
@@ -88,19 +75,6 @@ export default function ModalSearchRoom({
               <Row gutter={[22, 0]} className="w-full">
                 <Col span={12}>
                   <Row>
-                    <Col span={24}>
-                      <FormItemGlobal
-                        name={"type_room_id"}
-                        label="Loại phòng"
-                        required
-                      >
-                        <SelectFormikGlobal
-                          name="type_room_id"
-                          placeholder="Chọn loại phòng"
-                          options={convertDataRoomTypes}
-                        ></SelectFormikGlobal>
-                      </FormItemGlobal>
-                    </Col>
                     <Col span={24}>
                       <FormItemGlobal
                         name={"checkin"}

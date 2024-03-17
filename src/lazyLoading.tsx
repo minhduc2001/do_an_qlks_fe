@@ -1,5 +1,6 @@
 import React from "react";
 
+const UserManagement = React.lazy(() => import("./pages/UserManagement"));
 const PageNotFound = React.lazy(() => import("@/pages/404"));
 const Home = React.lazy(() => import("@/pages/Home"));
 const About = React.lazy(() => import("@/pages/About"));
@@ -25,6 +26,11 @@ export const PUBLIC_ROUTES = [
   {
     path: "/thank/:slug",
     component: Thanks,
+    name: "",
+  },
+  {
+    path: "/user",
+    component: UserManagement,
     name: "",
   },
   {

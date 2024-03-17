@@ -49,7 +49,7 @@ const ItemRoom = (props: ItemRoomProps) => {
             Giá trên đã bao gồm VAT & Phí phục vụ, chưa bao gồm phụ thu ngày Lễ
             tết
           </p>
-          <p className="my-3 text-[17px] text-[#003C4C]">
+          <p className="my-3 text-[17px] text-[#003C4C] overflow-hidden h-[200px]">
             {props.item.description || "Mô tả phòng chờ cập nhật"}
           </p>
 

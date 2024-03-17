@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Header from "../Header";
-import MainRoutes from "@/routes";
 import Footer from "../Footer";
 import FloatButton from "@/components/FloatButton/FloatButton";
 import ModalSearchRoom from "@/components/ModalSearchRoom";

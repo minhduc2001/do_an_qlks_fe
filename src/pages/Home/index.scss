@@ -1,23 +1,68 @@
 .home-page {
   .carousel {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    gap: 24px;
 
     .ant-carousel {
       display: flex;
       justify-content: center;
       max-width: 1000px;
     }
-
-    h2,
-    p {
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
+    > span {
+      a {
+        text-decoration: underline;
+      }
     }
   }
 
   @media (max-width: 1175px) {
     .carousel {
       display: block;
+    }
+  }
+
+  .div-info-top {
+    span {
+      color: #7a7a7a;
+      font-family: "Verdana", Arial;
+      font-size: 10px;
+      font-weight: 500;
+    }
+    h1 {
+      color: rgba(74, 74, 74, 0.96);
+      font-family: "Arial", Arial;
+      font-size: 20px;
+      font-weight: 500;
+      text-transform: capitalize;
+      font-style: normal;
+      line-height: 1em;
+      letter-spacing: 0.1px;
+    }
+
+    a {
+      text-decoration: underline;
+    }
+  }
+
+  .div-info-room {
+    text-align: center;
+    h2 {
+      color: #003c4c;
+      font-family: "Arial", Arial;
+      font-size: 24px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 6px;
+    }
+
+    p {
+      color: #000000;
+      font-family: "Arial", Arial;
+      font-size: 17px;
+      font-weight: 300;
     }
   }
 }

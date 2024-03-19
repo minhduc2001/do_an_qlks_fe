@@ -43,7 +43,7 @@ const ItemRoom = (props: ItemRoomProps) => {
             {props.item.name || "Tên phòng chờ cập nhật"}
           </h2>
           <h1 className="text-center cursor-pointer text-[33px] text-[#003C4C] hover:text-[#fcb134] mt-2">
-            {props.item.price}
+            {props.item.price.toLocaleString()} đ
           </h1>
           <p className="text-center cursor-pointer text-[12px] text-[#7A7A7A] hover:text-[#fcb134] mt-2 ">
             Giá trên đã bao gồm VAT & Phí phục vụ, chưa bao gồm phụ thu ngày Lễ

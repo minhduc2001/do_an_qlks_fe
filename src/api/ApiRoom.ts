@@ -1,5 +1,12 @@
 import { fetcher } from "./Fetcher";
 
+export enum EPaymentType {
+  Momo,
+  Vnpay,
+  Zalopay,
+  Cash,
+}
+
 export interface IGetRoomsParams {
   page?: number;
   limit?: number;
@@ -23,6 +30,11 @@ export interface IRoomRes {
   slug: string;
 }
 
+export interface ICheckTypeRes {
+  type_room: any;
+  c: number;
+}
+
 export interface IGetRoomsRes {
   metadata: {
     pageNumber: number;
@@ -34,22 +46,21 @@ export interface IGetRoomsRes {
 }
 
 export interface IBookRoomBody {
-  firstName: string;
-  lastName: string;
-  sex: string;
+  username: string;
+  gender: string;
   email: string;
-  tel: string;
-  checkin: string;
-  checkout: string;
-  idRoom: string;
-  paymentType: string;
+  phone: string;
+  check_in: Date;
+  check_out: Date;
+  type_room_id: number;
+  payment_method: EPaymentType;
   quantity: number;
 }
 
 export interface ICheckTypeRoom {
-  checkin: Date;
-  checkout: Date;
-  id: number;
+  check_in: Date;
+  check_out: Date;
+  id?: number;
 }
 
 const getRooms = (params?: IGetRoomsParams): Promise<IGetRoomsRes> => {
@@ -61,11 +72,11 @@ const getRoom = (slug: string): Promise<IRoomRes> => {
 };
 
 const bookRoom = (data: IBookRoomBody): Promise<string> => {
-  return fetcher({ method: "post", url: "booking/client-booking", data });
+  return fetcher({ method: "post", url: "booking", data });
 };
 
-const checkTypeRoom = (params: ICheckTypeRoom) => {
-  return fetcher({ method: "get", url: "room/check", params });
+const checkTypeRoom = (data: ICheckTypeRoom): Promise<ICheckTypeRes[]> => {
+  return fetcher({ method: "post", url: "booking/check", data });
 };
 
 export default {

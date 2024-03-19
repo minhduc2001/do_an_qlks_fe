@@ -12,11 +12,13 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 
 import ButtonGlobal from "../ButtonGlobal";
 import Notification from "../Notification";
+import { useNavigate } from "react-router-dom";
+
+import "./index.scss";
 
 interface ISearchValue {
-  type_room_id?: number;
-  checkin: Moment;
-  checkout: Moment;
+  check_in: Moment;
+  check_out: Moment;
 }
 
 interface IModalSearchRoomProps {
@@ -28,10 +30,11 @@ export default function ModalSearchRoom({
   handleCloseModal,
 }: IModalSearchRoomProps) {
   const innerRef = useRef<FormikProps<ISearchValue>>(null);
+  const navigate = useNavigate();
 
   const initialValues: ISearchValue = {
-    checkin: moment().startOf("day"),
-    checkout: moment().startOf("day").add(1, "day"),
+    check_in: moment().startOf("day"),
+    check_out: moment().startOf("day").add(1, "day"),
   };
 
   const onCancel = () => {
@@ -42,16 +45,18 @@ export default function ModalSearchRoom({
   const checkTypeRoom = useMutation(ApiRoom.checkTypeRoom);
 
   const handleSubmit = (values: ISearchValue) => {
-    if (!values.type_room_id)
-      Notification.notificationError("Dữ liệu đang không đúng");
-
     const newValues = {
       ...values,
-      checkin: new Date(moment(values.checkin).format("YYYY-MM-DD")),
-      checkout: new Date(moment(values.checkout).format("YYYY-MM-DD")),
+      check_in: new Date(moment(values.check_in).format("YYYY-MM-DD")),
+      check_out: new Date(moment(values.check_out).format("YYYY-MM-DD")),
     } as ICheckTypeRoom;
 
     checkTypeRoom.mutate(newValues);
+  };
+
+  const handleClick = (slug: string) => {
+    navigate("/room/" + slug);
+    onCancel();
   };
 
   return (
@@ -77,37 +82,37 @@ export default function ModalSearchRoom({
                   <Row>
                     <Col span={24}>
                       <FormItemGlobal
-                        name={"checkin"}
+                        name={"check_in"}
                         label="Check in"
                         required
                       >
                         <DatePickerFormikGlobal
-                          name="checkin"
+                          name="check_in"
                           placeholder="Check-in"
                           allowClear={false}
                           disabledDate={(d) =>
                             d <= moment().subtract(1, "days") ||
-                            d >= values.checkout
+                            d >= values.check_out
                           }
                           onChange={(date) => {
-                            setFieldValue("checkin", date?.startOf("day"));
+                            setFieldValue("check_in", date?.startOf("day"));
                           }}
                         />
                       </FormItemGlobal>
                     </Col>
                     <Col span={24}>
                       <FormItemGlobal
-                        name="checkout"
+                        name="check_out"
                         label="Check-out"
                         required
                       >
                         <DatePickerFormikGlobal
-                          name="checkout"
+                          name="check_out"
                           placeholder="Check-out"
                           allowClear={false}
-                          disabledDate={(d) => d <= values.checkin}
+                          disabledDate={(d) => d <= values.check_in}
                           onChange={(date) => {
-                            setFieldValue("checkout", date?.startOf("day"));
+                            setFieldValue("check_out", date?.startOf("day"));
                           }}
                         />
                       </FormItemGlobal>
@@ -121,7 +126,29 @@ export default function ModalSearchRoom({
                 </Col>
                 <Col span={12}>
                   <div className="flex justify-center items-center h-full">
-                    <Empty></Empty>
+                    {checkTypeRoom?.data && checkTypeRoom.data.length ? (
+                      <Row className="w-full" gutter={[0, 10]}>
+                        {checkTypeRoom.data.map((data, index) => {
+                          return (
+                            data && (
+                              <Col
+                                key={index}
+                                span={24}
+                                className="col-data"
+                                onClick={() => {
+                                  handleClick(data?.type_room?.slug);
+                                }}
+                              >
+                                <span>Loại: {data?.type_room?.name}</span>
+                                <span>Còn trống: {data?.c}</span>
+                              </Col>
+                            )
+                          );
+                        })}
+                      </Row>
+                    ) : (
+                      <Empty></Empty>
+                    )}
                   </div>
                 </Col>
               </Row>

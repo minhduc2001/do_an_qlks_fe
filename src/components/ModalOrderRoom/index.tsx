@@ -11,7 +11,7 @@ import FormGlobal, {
 } from "../FormGlobal";
 import ModalGlobal from "../ModalGlobal";
 import moment, { Moment } from "moment";
-import ApiRoom, { IBookRoomBody, IRoomRes } from "@/api/ApiRoom";
+import ApiRoom, { EPaymentType, IBookRoomBody, IRoomRes } from "@/api/ApiRoom";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import Notification from "../Notification";
 import { BookingRoomValidation } from "@/utils/validation/booking-room";
@@ -19,15 +19,14 @@ import { REG_EMAIL } from "@/utils/validation/booking-room/reg";
 import ApiUser, { EGender } from "@/api/ApiUser";
 
 interface IRoomValue {
-  firstName: string;
-  lastName: string;
+  username: string;
   gender: EGender;
   email: string;
   phone: string;
-  checkin: Moment;
-  checkout: Moment;
-  idRoom?: number;
-  paymentType: string;
+  check_in: Moment;
+  check_out: Moment;
+  type_room_id: number;
+  payment_type: EPaymentType;
   quantity: number;
 }
 
@@ -44,15 +43,14 @@ export default function ModalOrderRoom({
   const innerRef = useRef<FormikProps<IRoomValue>>(null);
 
   const initialValues: IRoomValue = {
-    firstName: "",
-    lastName: "",
+    username: "",
     gender: EGender.Other,
     email: "",
     phone: "",
-    checkin: moment().startOf("day"),
-    checkout: moment().startOf("day").add(1, "day"),
-    idRoom: roomSelected.id,
-    paymentType: "Momo",
+    check_in: moment().startOf("day"),
+    check_out: moment().startOf("day").add(1, "day"),
+    type_room_id: roomSelected.id ?? 1,
+    payment_type: EPaymentType.Vnpay,
     quantity: 1,
   };
 
@@ -71,12 +69,15 @@ export default function ModalOrderRoom({
 
   const bookRoomMutation = useMutation(ApiRoom.bookRoom);
   const handleSubmit = (values: IRoomValue) => {
-    const newValues: IBookRoomBody = {
-      ...values,
-      checkin: values.checkin.format("YYYY-MM-DD"),
-      checkout: values.checkout.format("YYYY-MM-DD"),
+    const newValues = {
+      quantity: values.quantity,
+      check_in: new Date(values.check_in.format("YYYY-MM-DD")),
+      check_out: new Date(values.check_out.format("YYYY-MM-DD")),
+      payment_method: values.payment_type,
+      type_room_id: roomSelected.id,
     };
-    bookRoomMutation.mutate(newValues, {
+
+    bookRoomMutation.mutate(newValues as IBookRoomBody, {
       onSuccess: (response) => {
         Notification.notificationSuccess("Vui lòng hoàn tất thủ tục đặt phòng");
         window.open(response, "_blank");
@@ -91,16 +92,7 @@ export default function ModalOrderRoom({
     <Formik
       innerRef={innerRef}
       initialValues={{
-        firstName: "",
-        lastName: "",
-        gender: EGender.Other,
-        email: "",
-        phone: "",
-        checkin: moment().startOf("day"),
-        checkout: moment().startOf("day").add(1, "day"),
-        idRoom: roomSelected.id,
-        paymentType: "Momo",
-        quantity: 1,
+        ...initialValues,
         ...me,
       }}
       enableReinitialize
@@ -218,20 +210,20 @@ export default function ModalOrderRoom({
                     <Row gutter={[32, 0]}>
                       <Col span={12}>
                         <FormItemGlobal
-                          name="checkin"
+                          name="check_in"
                           label="Check-in"
                           required
                         >
                           <DatePickerFormikGlobal
-                            name="checkin"
+                            name="check_in"
                             allowClear={false}
                             disabledDate={(d) =>
                               d <= moment().subtract(1, "days") ||
-                              d >= formikProps.values.checkout
+                              d >= formikProps.values.check_out
                             }
                             onChange={(date) => {
                               formikProps.setFieldValue(
-                                "checkin",
+                                "check_in",
                                 date?.startOf("day")
                               );
                             }}
@@ -240,19 +232,19 @@ export default function ModalOrderRoom({
                       </Col>
                       <Col span={12}>
                         <FormItemGlobal
-                          name="checkout"
+                          name="check_out"
                           label="Check-out"
                           required
                         >
                           <DatePickerFormikGlobal
-                            name="checkout"
+                            name="check_out"
                             allowClear={false}
                             disabledDate={(d) =>
-                              d <= formikProps.values.checkin
+                              d <= formikProps.values.check_in
                             }
                             onChange={(date) => {
                               formikProps.setFieldValue(
-                                "checkout",
+                                "check_out",
                                 date?.startOf("day")
                               );
                             }}
@@ -263,21 +255,21 @@ export default function ModalOrderRoom({
                     <span className="font-bold">
                       Số tiền thanh toán:{" "}
                       {calculateNight(
-                        formikProps.values.checkin,
-                        formikProps.values.checkout
+                        formikProps.values.check_in,
+                        formikProps.values.check_out
                       )}{" "}
                       VNĐ
                     </span>
                     <Divider />
                     <div className="mt-5">
                       <span className="font-bold">Phương thức thanh toán</span>
-                      <FormItemGlobal name="paymentType" required>
+                      <FormItemGlobal name="payment_type" required>
                         <RadioGroupFormikGlobal
-                          name="paymentType"
+                          name="payment_type"
                           options={[
-                            { label: "Momo", value: "Momo" },
-                            { label: "Vnpay", value: "Vnpay" },
-                            { label: "Zalopay", value: "Zalopay" },
+                            { label: "Momo", value: EPaymentType.Momo },
+                            { label: "Vnpay", value: EPaymentType.Vnpay },
+                            { label: "Zalopay", value: EPaymentType.Zalopay },
                           ]}
                         />
                       </FormItemGlobal>

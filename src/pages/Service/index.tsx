@@ -14,15 +14,15 @@ export default function Service() {
         title="Dịch vụ"
         image="https://ninhbinhlegendhotel.com/wp-content/uploads/2022/09/CAR_6689-scaled.jpg"
       ></SubHeader>
-      <div className="px-20 py-10">
+      <div className="px-20 py-10 bg-[#F3eee7]">
         <div className="flex justify-center">
           <Row gutter={[16, 24]} className="w-[1200px]">
             {services?.results.map((item, i) => (
-              <Col key={i} sm={24} md={12}>
+              <Col key={i} sm={24} md={8}>
                 <div className="text-start">
                   <div className="w-full h-[400px] overflow-hidden bg-[#ccc]">
                     <Image
-                      className="hover:scale-125 w-full h-[400px] object-cover transition-all duration-300 ease-out cursor-pointer"
+                      className="w-full h-[400px] object-cover transition-all duration-300 ease-out cursor-pointer"
                       src={
                         item.image ??
                         "https://www.pistachiohotel.com/UploadFile/Banner/home5.jpg"
@@ -30,34 +30,26 @@ export default function Service() {
                       preview={false}
                     />
                   </div>
-                  <Popover
-                    title={
-                      <ul>
-                        <li>Đơn vị: {item.unity ?? "-"}</li>
-                        <li>
-                          Đơn giá: {(item.price ?? 0).toLocaleString()} vnđ
-                        </li>
-                      </ul>
-                    }
-                  >
-                    <div className="flex justify-between">
+
+                  <div className=" div-info">
+                    <span className="flex justify-between items-center">
                       <h2
-                        className="cursor-pointer text-[16px] hover:text-[#fcb134] mt-2 uppercase"
+                        className="cursor-pointer text-[16px] hover:text-[#fcb134]  uppercase"
                         role="presentation"
                       >
                         {item.name || "Tên dịch vụ chờ cập nhật"}
                       </h2>
                       <h2
-                        className="cursor-pointer text-[16px] hover:text-[#fcb134] mt-2 uppercase"
+                        className="cursor-pointer text-[16px] hover:text-[#fcb134] "
                         role="presentation"
                       >
-                        {(item.price || 0).toLocaleString()} vnđ
+                        {(item.price || 0).toLocaleString()} đ / {item.unity}
                       </h2>
-                    </div>
-                  </Popover>
-                  <p className="my-3">
-                    {item.description || "Mô tả dịch chờ cập nhật"}
-                  </p>
+                    </span>
+                    <p className="my-3">
+                      {item.description || "Mô tả dịch chờ cập nhật"}
+                    </p>
+                  </div>
                 </div>
               </Col>
             ))}

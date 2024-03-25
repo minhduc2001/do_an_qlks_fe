@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import "./index.scss";
 import { Image } from "antd";
-import ButtonGlobal from "@/components/ButtonGlobal";
+
 import {
   DoubleRightOutlined,
   ExpandOutlined,

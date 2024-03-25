@@ -4,19 +4,17 @@ import ModalGlobal from "../ModalGlobal";
 interface ModalNotiLoginProps {
   isOpenModal: boolean;
   handleCloseModal: () => void;
+  title: string;
+  handleSubmit: () => void;
 }
 export default function ModalNotiLogin({
   isOpenModal,
   handleCloseModal,
+  title,
+  handleSubmit,
 }: ModalNotiLoginProps) {
   const onCancel = () => {
     handleCloseModal();
-  };
-
-  const navigate = useNavigate();
-
-  const handleSubmit = () => {
-    navigate("/login");
   };
 
   return (
@@ -27,7 +25,7 @@ export default function ModalNotiLogin({
       onCancel={onCancel}
       width={500}
     >
-      <>Hãy đăng nhập để đặt phòng!</>
+      <>{title}!</>
     </ModalGlobal>
   );
 }

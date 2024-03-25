@@ -87,6 +87,7 @@ export function fetcher<T>(
           resolve(response.data.data);
           return;
         }
+
         const dataError: IDataError = {
           errorCode: response.data.errorCode ?? "ERROR???",
           message: response.data.message ?? "Somethings Wrong",

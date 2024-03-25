@@ -19,6 +19,7 @@ import ModalNotiLogin from "@/components/ModalNotiLogin";
 export default function DetailRoom() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenModal1, setIsOpenModal1] = useState(false);
+  const [isOpenModal2, setIsOpenModal2] = useState(false);
 
   const { id: slug = "" } = useParams();
 
@@ -28,6 +29,8 @@ export default function DetailRoom() {
     { enabled: !!slug }
   );
 
+  const navigate = useNavigate();
+
   const handleCloseModal = () => {
     setIsOpenModal(false);
   };
@@ -36,8 +39,13 @@ export default function DetailRoom() {
     setIsOpenModal1(false);
   };
 
+  const handleCloseModal2 = () => {
+    setIsOpenModal2(false);
+  };
+
   const handleClick = () => {
     if (!ApiUser.isLogin()) return setIsOpenModal1(true);
+    if (ApiUser.isFirstLogin()) return setIsOpenModal2(true);
     setIsOpenModal(true);
   };
 
@@ -132,6 +140,15 @@ export default function DetailRoom() {
       <ModalNotiLogin
         isOpenModal={isOpenModal1}
         handleCloseModal={handleCloseModal1}
+        title={"Hãy đăng nhập để đặt phòng"}
+        handleSubmit={() => navigate("/login")}
+      />
+
+      <ModalNotiLogin
+        isOpenModal={isOpenModal2}
+        handleCloseModal={handleCloseModal2}
+        title={"Hãy cập nhật thông tin để đặt phòng"}
+        handleSubmit={() => navigate("/user")}
       />
     </div>
   );

@@ -107,7 +107,7 @@ export default function Hotel() {
 
       <div className="px-20 py-10 bg-[#f5f5f5]">
         <div className="text-center mb-3">
-          <h3 className="text-[19px]">Khách sạn Thanh sơn</h3>
+          <h3 className="text-[19px]">Khách sạn Ninh Bình</h3>
           <h1 className="text-[#333] text-[1.8em] font-normal">
             DANH SÁCH PHÒNG
           </h1>

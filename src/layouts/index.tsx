@@ -11,6 +11,7 @@ function LayoutWrapper() {
       navigate("/user");
     }
   }, [ApiUser.isFirstLogin()]);
+
   return (
     <div className="wrapper">
       <MainRoutes />

@@ -18,11 +18,11 @@ const UserSlice = createSlice({
       return initialState;
     },
     reloadUser: (state, action: PayloadAction<IUserUpdate>) => {
-      return { ...state, ...action, first_login: false };
+      return { ...state, ...action.payload, first_login: false };
     },
 
     updateAvatarUser: (state, action: PayloadAction<IUserUpdate>) => {
-      return { ...state, ...action };
+      return { ...state, ...action.payload };
     },
   },
 });

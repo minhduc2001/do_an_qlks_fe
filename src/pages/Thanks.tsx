@@ -7,14 +7,8 @@ function Thanks() {
   const navigate = useNavigate();
   const { slug } = useParams();
 
-  console.log(slug);
-
-  useEffect(() => {
-    window.scrollTo(0, document.body.scrollHeight);
-  }, []);
-
   return (
-    <div>
+    <div className="mt-[200px] mb-[100px]">
       <Helmet title="Thank you!" description="redirect your payment" />
       {slug === "success" ? (
         <Result

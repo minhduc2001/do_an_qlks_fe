@@ -97,7 +97,9 @@ const Infomation = () => {
                       "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
                     }
                     width={160}
+                    height={160}
                     preview={false}
+                    className="object-cover"
                   ></Image>
                   <div className="mt-10">
                     <Upload {...props}>

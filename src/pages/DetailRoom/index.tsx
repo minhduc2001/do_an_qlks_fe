@@ -94,29 +94,27 @@ export default function DetailRoom() {
                       <ul>
                         <li>
                           <FaUsers />
-                          <span>Người lớn</span>
+                          <span>Người lớn: {room?.parent}</span>
                         </li>
                         <li>
                           <FaEye />
-                          <span>
-                            Chứa tối đa : Hai người lớn, một trẻ em dưới 6 tuổi
-                          </span>
+                          <span>Chứa tối đa: {room?.contains}</span>
                         </li>
                         <li>
                           <FaSquare />
-                          <span>Diện tích: 35m²</span>
+                          <span>Diện tích: {room?.area} m²</span>
                         </li>
                         <li>
                           <FaBed />
-                          <span>Loại giường: Giường cỡ lớn (2.2m x 2.2m)</span>
+                          <span>Loại giường: {room?.type_bed}</span>
                         </li>
                         <li>
                           <FaRegClock />
-                          <span>Check in: 02:00p.m</span>
+                          <span>Check in: {room?.checkin}</span>
                         </li>
                         <li>
                           <FaClock />
-                          <span>Check out: 12:00p.m</span>
+                          <span>Check out: {room?.checkout}</span>
                         </li>
                       </ul>
                     </div>

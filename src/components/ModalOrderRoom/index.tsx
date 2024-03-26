@@ -164,14 +164,19 @@ export default function ModalOrderRoom({
                           />
                         </FormItemGlobal>
                         <FormItemGlobal
-                          name="quantity"
-                          label="quantity"
+                          name="gender"
+                          label="Giới tính"
                           required
                         >
-                          <InputNumberFormikGlobal
-                            name="quantity"
-                            placeholder="Số lượng"
-                            min={1}
+                          <SelectFormikGlobal
+                            name="gender"
+                            placeholder="Giới tính"
+                            options={[
+                              { label: "Nam", value: EGender.Male },
+                              { label: "Nữ", value: EGender.Female },
+                              { label: "Khác", value: EGender.Other },
+                            ]}
+                            disabled
                           />
                         </FormItemGlobal>
                       </Col>
@@ -189,19 +194,14 @@ export default function ModalOrderRoom({
                       </Col>
                       <Col span={12}>
                         <FormItemGlobal
-                          name="gender"
-                          label="Giới tính"
+                          name="quantity"
+                          label="quantity"
                           required
                         >
-                          <SelectFormikGlobal
-                            name="gender"
-                            placeholder="Giới tính"
-                            options={[
-                              { label: "Nam", value: EGender.Male },
-                              { label: "Nữ", value: EGender.Female },
-                              { label: "Khác", value: EGender.Other },
-                            ]}
-                            disabled
+                          <InputNumberFormikGlobal
+                            name="quantity"
+                            placeholder="Số lượng"
+                            min={1}
                           />
                         </FormItemGlobal>
                       </Col>

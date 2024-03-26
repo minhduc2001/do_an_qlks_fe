@@ -56,15 +56,15 @@ const ItemRoom = (props: ItemRoomProps) => {
           <ul>
             <li className="flex list-feature">
               <TeamOutlined />
-              <p>2 người lớn + 1 trẻ dưới 6 tuổi</p>
+              <p>{props.item?.contains || "2 người lớn + 1 trẻ dưới 6 tuổi"}</p>
             </li>
             <li className="flex list-feature">
               <ExpandOutlined />
-              <p>Diện tích 35m²</p>
+              <p>{props.item?.area || "Diện tích 35m²"}</p>
             </li>
             <li className="flex list-feature">
               <LayoutOutlined />
-              <p>Giường cỡ lớn (2.2m x 2.2m)</p>
+              <p>{props.item?.type_bed || "Giường cỡ lớn (2.2m x 2.2m)"}</p>
             </li>
           </ul>
         </div>

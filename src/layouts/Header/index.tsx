@@ -8,6 +8,7 @@ import {
   useIsFetching,
   useIsMutating,
   useMutation,
+  useQuery,
 } from "@tanstack/react-query";
 import ApiUser from "@/api/ApiUser";
 import store, { IRootState } from "@/redux/store";
@@ -40,7 +41,7 @@ function Header() {
     setActive(window.location.pathname);
   }, [window.location.pathname]);
 
-  const user = useSelector((root: IRootState) => root.user);
+  const { data: me } = useQuery(["get_me"], () => ApiUser.getMe());
 
   useEffect(() => {
     const onScroll = () => {
@@ -97,7 +98,7 @@ function Header() {
         )}
 
         <li className="w-[80px] nav-item mt-1 ml-20">
-          {user?.id ? (
+          {me?.id ? (
             <Popover
               open={open}
               content={content}
@@ -106,7 +107,7 @@ function Header() {
               placement={"bottom"}
               onOpenChange={handleOpenChange}
             >
-              <Avatar icon={user.avatar} />
+              <Avatar icon={me?.avatar} src={me.avatar} />
             </Popover>
           ) : (
             <Link to={"/login"}>

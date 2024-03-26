@@ -68,7 +68,14 @@ function uploadAvatar(data: {
   id: number;
   data: FormData;
 }): Promise<{ avatar: string }> {
-  return fetcher({ url: "user/avatar/" + data.id, data: data.data });
+  return fetcher(
+    {
+      url: "user/avatar/" + data.id,
+      method: "patch",
+      data: data.data,
+    },
+    { isFormData: true }
+  );
 }
 
 function isLogin(): boolean {

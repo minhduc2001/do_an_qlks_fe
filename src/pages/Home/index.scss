@@ -6,6 +6,10 @@
     align-items: center;
     gap: 24px;
 
+    .ant-image {
+      width: 100%;
+    }
+
     .ant-carousel {
       display: flex;
       justify-content: center;

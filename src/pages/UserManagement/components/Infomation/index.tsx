@@ -1,4 +1,4 @@
-import { Button, Col, Image, Row, Upload, UploadProps } from "antd";
+import { Button, Col, Image, Row, Upload, UploadFile, UploadProps } from "antd";
 import "./index.scss";
 import { Formik } from "formik";
 import FormGlobal, {
@@ -12,7 +12,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import ApiUser, { EGender, IUserUpdate } from "@/api/ApiUser";
 import Notification from "@/components/Notification";
 import { useDispatch } from "react-redux";
-import { reloadUser } from "@/redux/slices/UserSlice";
+import { reloadUser, updateAvatarUser } from "@/redux/slices/UserSlice";
+import { CheckInfoValidation } from "@/utils/validation/user";
+import { useState } from "react";
+import store from "@/redux/store";
+import { RcFile } from "antd/lib/upload";
 
 const Infomation = () => {
   const initialValues: IUserUpdate = {
@@ -26,6 +30,7 @@ const Infomation = () => {
   const dispatch = useDispatch();
 
   const updateUser = useMutation(ApiUser.updateUser);
+  const updateAvatar = useMutation(ApiUser.uploadAvatar);
 
   const onSubmit = (values: IUserUpdate) => {
     updateUser.mutate(
@@ -42,7 +47,6 @@ const Infomation = () => {
       {
         onSuccess: (res: IUserUpdate) => {
           Notification.notificationSuccess("Cập nhật thông tin thành công");
-          console.log(res);
 
           dispatch(reloadUser(res));
         },
@@ -52,31 +56,46 @@ const Infomation = () => {
 
   const props: UploadProps = {
     // action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
-    onChange({ file, fileList }) {
+    onChange({ file }) {
       if (file.status !== "uploading") {
-        console.log(file, fileList);
+        const { user } = store.getState();
+        const formData = new FormData();
+        formData.append("file", file.originFileObj as RcFile);
+        updateAvatar.mutate(
+          { id: user.id as number, data: formData },
+          {
+            onSuccess: (res: { avatar: string }) => {
+              dispatch(updateAvatarUser(res as IUserUpdate));
+              refetch();
+            },
+          }
+        );
       }
     },
     showUploadList: false,
     multiple: false,
   };
 
-  const { data: me } = useQuery(["get_me"], () => ApiUser.getMe());
+  const { data: me, refetch } = useQuery(["get_me"], () => ApiUser.getMe());
 
   return (
     <Formik
       initialValues={(me as IUserUpdate) ?? initialValues}
       onSubmit={onSubmit}
       enableReinitialize
+      validationSchema={CheckInfoValidation}
     >
-      {(formikProps): JSX.Element => {
+      {(): JSX.Element => {
         return (
           <div className="div-root">
             <Row gutter={33}>
               <Col span={10}>
                 <div className="flex justify-center flex-col items-center mt-20">
                   <Image
-                    src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    src={
+                      me?.avatar ||
+                      "https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                    }
                     width={160}
                     preview={false}
                   ></Image>

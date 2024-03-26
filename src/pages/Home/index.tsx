@@ -118,7 +118,7 @@ export default function Hotel() {
               return (
                 <Col span={12} key={i}>
                   <Image
-                    className="h-[500px] object-cover cursor-pointer"
+                    className="h-[500px] w-full object-cover cursor-pointer"
                     src={
                       item.images?.[0] ??
                       "https://www.pistachiohotel.com/UploadFile/Banner/home2.jpg"

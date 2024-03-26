@@ -38,6 +38,7 @@ export interface IUserUpdate {
   cccd: string;
   gender: EGender;
   id?: number;
+  avatar?: string;
 }
 
 function login(data: ILoginBody): Promise<ILoginRes> {
@@ -63,6 +64,13 @@ function getAuthToken(): string | undefined {
   return user.accessToken;
 }
 
+function uploadAvatar(data: {
+  id: number;
+  data: FormData;
+}): Promise<{ avatar: string }> {
+  return fetcher({ url: "user/avatar/" + data.id, data: data.data });
+}
+
 function isLogin(): boolean {
   return !!getAuthToken();
 }
@@ -86,4 +94,5 @@ export default {
   isFirstLogin,
   getMe,
   updateUser,
+  uploadAvatar,
 };

@@ -2,18 +2,16 @@ import { Link } from "react-router-dom";
 import "./index.scss";
 import { PUBLIC_ROUTES } from "@/lazyLoading";
 import { useEffect, useState } from "react";
-import { Avatar, Button, Carousel, Image, Popover } from "antd";
+import { Avatar, Button, Popover } from "antd";
 import { LoginOutlined, SyncOutlined } from "@ant-design/icons";
 import {
   useIsFetching,
   useIsMutating,
   useMutation,
-  useQuery,
 } from "@tanstack/react-query";
 import ApiUser from "@/api/ApiUser";
-import store, { IRootState } from "@/redux/store";
-import { useDispatch, useSelector } from "react-redux";
-import { loginUser, logoutUser } from "@/redux/slices/UserSlice";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "@/redux/slices/UserSlice";
 
 function Header() {
   const [isScroll, setIsScroll] = useState(false);
@@ -41,7 +39,12 @@ function Header() {
     setActive(window.location.pathname);
   }, [window.location.pathname]);
 
-  const { data: me } = useQuery(["get_me"], () => ApiUser.getMe());
+  const getMe = useMutation(ApiUser.getMe);
+
+  useEffect(() => {
+    if (ApiUser.isLogin()) getMe.mutate();
+    else getMe.reset();
+  }, [ApiUser.isLogin()]);
 
   useEffect(() => {
     const onScroll = () => {
@@ -98,7 +101,7 @@ function Header() {
         )}
 
         <li className="w-[80px] nav-item mt-1 ml-20">
-          {me?.id ? (
+          {getMe?.data?.id ? (
             <Popover
               open={open}
               content={content}
@@ -107,7 +110,7 @@ function Header() {
               placement={"bottom"}
               onOpenChange={handleOpenChange}
             >
-              <Avatar icon={me?.avatar} src={me.avatar} />
+              <Avatar src={getMe?.data?.avatar} />
             </Popover>
           ) : (
             <Link to={"/login"}>

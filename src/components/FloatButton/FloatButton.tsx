@@ -9,10 +9,10 @@ const FloatButton = (props: FloatButtonProps) => {
   return (
     <Tooltip title="Tìm kiếm phòng" placement={"left"}>
       <div
-        className="fixed bottom-20 right-10 bg-blue-500 text-white rounded-full w-12 h-12 flex items-center justify-center cursor-pointer"
+        className="fixed bottom-20 right-20 bg-blue-500 text-white rounded-full w-20 h-20 flex items-center justify-center cursor-pointer"
         onClick={props.onClick}
       >
-        <FileSearchOutlined />
+        <FileSearchOutlined className="text-[30px]" />
       </div>
     </Tooltip>
   );

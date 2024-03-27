@@ -106,7 +106,7 @@ const Register = () => {
 
                 <hr className="my-6 border-gray-300 w-full" />
 
-                <div className="flex justify-between w-full">
+                {/* <div className="flex justify-between w-full">
                   <Link
                     type="button"
                     className="w-[45%] block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
@@ -168,7 +168,7 @@ const Register = () => {
                       <span className="ml-4">Facebook</span>
                     </div>
                   </button>
-                </div>
+                </div> */}
 
                 <p className="mt-8">
                   Đã có tài khoản?{" "}

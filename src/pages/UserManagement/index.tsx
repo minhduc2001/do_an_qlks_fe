@@ -14,11 +14,11 @@ const UserManagement = () => {
         label: "Thông tin tài khoản",
         children: <Infomation></Infomation>,
       },
-      {
-        key: "2",
-        label: "Mật khẩu",
-        children: <PasswordChange></PasswordChange>,
-      },
+      // {
+      //   key: "2",
+      //   label: "Mật khẩu",
+      //   children: <PasswordChange></PasswordChange>,
+      // },
     ];
   }, []);
   return (

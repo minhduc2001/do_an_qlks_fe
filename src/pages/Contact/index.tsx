@@ -45,7 +45,7 @@ const Contact = () => {
           </div>
           <div className="flex justify-center py-20">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3690.4580290489357!2d103.84083457619391!3d22.336327879660754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x36cd416ca288a78d%3A0x2f373ec5673d75ef!2zNDcgWHXDom4gVmnDqm4sIFRULiBTYSBQYSwgU2EgUGEsIEzDoG8gQ2FpLCBWaeG7h3QgTmFt!5e0!3m2!1svi!2s!4v1699022185410!5m2!1svi!2s"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3742.62516463843!2d105.95578667610782!3d20.27437458119284!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x313679e61e830bcb%3A0x4a08422073a7973a!2sNinh%20Binh%20Legend%20Hotel!5e0!3m2!1svi!2s!4v1711779704623!5m2!1svi!2s"
               width="100%"
               height="600"
               style={{ border: 0 }}

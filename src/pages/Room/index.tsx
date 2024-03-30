@@ -8,7 +8,7 @@ import ItemRoom from "./components/ItemRoom/ItemRoom";
 export default function Room() {
   const roomParams: IGetRoomsParams = {
     page: 0,
-    limit: 4,
+    limit: 6,
   };
 
   const {
@@ -26,7 +26,7 @@ export default function Room() {
       getNextPageParam: (lastPage) => {
         const page = lastPage.metadata.pageNumber ?? 0;
         const total = lastPage.metadata.totalItems ?? 0;
-        const limit = roomParams.limit ?? 4;
+        const limit = roomParams.limit ?? 6;
         return total > (page + 1) * limit ? page + 1 : undefined;
       },
       cacheTime: 0,

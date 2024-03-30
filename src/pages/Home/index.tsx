@@ -142,73 +142,81 @@ export default function Hotel() {
         </div>
       </div>
 
-      <div className="px-20 py-10 bg-[#f5f5f5]">
-        <div className="text-center mb-3">
-          {/* <h3 className="text-[19px]">Khách sạn Ninh Bình</h3> */}
-          <h1 className="text-[#333] text-[1.8em] font-bold">
-            DANH SÁCH KHUYẾN MÃI
-          </h1>
+      {(promotions?.results?.length as number) > 0 && (
+        <div className="px-20 py-10 bg-[#f5f5f5]">
+          <div className="text-center mb-3">
+            {/* <h3 className="text-[19px]">Khách sạn Ninh Bình</h3> */}
+            <h1 className="text-[#333] text-[1.8em] font-bold">
+              DANH SÁCH KHUYẾN MÃI
+            </h1>
+          </div>
+          <div className="carousel mb-5">
+            <Row className="w-[80%]" gutter={22}>
+              {promotions?.results?.slice(0, 2)?.map((item, i) => {
+                return (
+                  <Col span={12} key={i}>
+                    <Image
+                      className="h-[500px] w-full object-cover cursor-pointer"
+                      src={
+                        item.image ??
+                        "https://www.pistachiohotel.com/UploadFile/Banner/home2.jpg"
+                      }
+                      preview={false}
+                    />
+                    <div className="div-info-room">
+                      <h2>{item.name ?? "Tên phòng đang chờ cập nhật"}</h2>
+                      <p>
+                        {item.description ?? "Mô tả phòng đang chờ cập nhật"}
+                      </p>
+                    </div>
+                  </Col>
+                );
+              })}
+            </Row>
+            <span>
+              <Link to={"/promotion"}>Khám phá nhiều hơn</Link>
+            </span>
+          </div>
         </div>
-        <div className="carousel mb-5">
-          <Row className="w-[80%]" gutter={22}>
-            {promotions?.results?.slice(0, 2)?.map((item, i) => {
-              return (
-                <Col span={12} key={i}>
-                  <Image
-                    className="h-[500px] w-full object-cover cursor-pointer"
-                    src={
-                      item.image ??
-                      "https://www.pistachiohotel.com/UploadFile/Banner/home2.jpg"
-                    }
-                    preview={false}
-                  />
-                  <div className="div-info-room">
-                    <h2>{item.name ?? "Tên phòng đang chờ cập nhật"}</h2>
-                    <p>{item.description ?? "Mô tả phòng đang chờ cập nhật"}</p>
-                  </div>
-                </Col>
-              );
-            })}
-          </Row>
-          <span>
-            <Link to={"/promotion"}>Khám phá nhiều hơn</Link>
-          </span>
-        </div>
-      </div>
+      )}
 
-      <div className="px-20 py-10 bg-[#f5f5f5]">
-        <div className="text-center mb-3">
-          {/* <h3 className="text-[19px]">Khách sạn Ninh Bình</h3> */}
-          <h1 className="text-[#333] text-[1.8em] font-bold">
-            DANH SÁCH DỊCH VỤ
-          </h1>
+      {(services?.results.length as number) > 0 && (
+        <div className="px-20 py-10 bg-[#f5f5f5]">
+          <div className="text-center mb-3">
+            {/* <h3 className="text-[19px]">Khách sạn Ninh Bình</h3> */}
+            <h1 className="text-[#333] text-[1.8em] font-bold">
+              DANH SÁCH DỊCH VỤ
+            </h1>
+          </div>
+          <div className="carousel mb-5">
+            <Row className="w-[80%]" gutter={22}>
+              {services?.results?.slice(0, 2)?.map((item, i) => {
+                return (
+                  <Col span={12} key={i}>
+                    <Image
+                      className="h-[500px] w-full object-cover cursor-pointer"
+                      src={
+                        item.image ??
+                        "https://www.pistachiohotel.com/UploadFile/Banner/home2.jpg"
+                      }
+                      preview={false}
+                    />
+                    <div className="div-info-room">
+                      <h2>{item.name ?? "Tên phòng đang chờ cập nhật"}</h2>
+                      <p>
+                        {item.description ?? "Mô tả phòng đang chờ cập nhật"}
+                      </p>
+                    </div>
+                  </Col>
+                );
+              })}
+            </Row>
+            <span>
+              <Link to={"/service"}>Khám phá nhiều hơn</Link>
+            </span>
+          </div>
         </div>
-        <div className="carousel mb-5">
-          <Row className="w-[80%]" gutter={22}>
-            {services?.results?.slice(0, 2)?.map((item, i) => {
-              return (
-                <Col span={12} key={i}>
-                  <Image
-                    className="h-[500px] w-full object-cover cursor-pointer"
-                    src={
-                      item.image ??
-                      "https://www.pistachiohotel.com/UploadFile/Banner/home2.jpg"
-                    }
-                    preview={false}
-                  />
-                  <div className="div-info-room">
-                    <h2>{item.name ?? "Tên phòng đang chờ cập nhật"}</h2>
-                    <p>{item.description ?? "Mô tả phòng đang chờ cập nhật"}</p>
-                  </div>
-                </Col>
-              );
-            })}
-          </Row>
-          <span>
-            <Link to={"/service"}>Khám phá nhiều hơn</Link>
-          </span>
-        </div>
-      </div>
+      )}
 
       {/* <div className="px-20 py-10">
         <div className="text-center mb-3">

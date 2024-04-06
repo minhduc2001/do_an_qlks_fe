@@ -1,3 +1,4 @@
+import { Moment } from "moment";
 import { fetcher } from "./Fetcher";
 
 export interface IGetPromotionsParams {
@@ -34,6 +35,11 @@ const getPromotions = (
   return fetcher({ method: "get", url: "/promotion/find", params });
 };
 
+const getPromotion = (checkin?: Date): Promise<IPromotionRes> => {
+  return fetcher({ method: "get", url: "/promotion/check/" + checkin });
+};
+
 export default {
   getPromotions,
+  getPromotion,
 };

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Formik, FormikProps } from "formik";
 import { Col, Divider, Image, Row, Tabs, TabsProps } from "antd";
 import FormGlobal, {
@@ -17,6 +17,8 @@ import Notification from "../Notification";
 import { BookingRoomValidation } from "@/utils/validation/booking-room";
 import { REG_EMAIL } from "@/utils/validation/booking-room/reg";
 import ApiUser, { EGender } from "@/api/ApiUser";
+import store from "@/redux/store";
+import ApiPromotion from "@/api/ApiPromotion";
 
 interface IRoomValue {
   username: string;
@@ -58,13 +60,25 @@ export default function ModalOrderRoom({
     innerRef.current?.resetForm();
     handleCloseModal();
   };
-
+  const getPromotionMutation = useMutation(ApiPromotion.getPromotion);
   const calculateNight = (sd: Moment, ed: Moment) => {
-    return (
+    let discount = 0;
+    const amount =
       ed.diff(sd, "days") *
       (roomSelected.price ?? 0) *
-      (innerRef.current?.values.quantity ?? 0)
-    ).toLocaleString();
+      (innerRef.current?.values.quantity ?? 0);
+    if (
+      getPromotionMutation.data &&
+      getPromotionMutation.data.discount <= amount
+    ) {
+      discount = amount - (amount * getPromotionMutation.data.discount) / 100;
+    }
+
+    return {
+      current: amount,
+      discount: discount,
+      diff: amount === discount,
+    };
   };
 
   const bookRoomMutation = useMutation(ApiRoom.bookRoom);
@@ -86,14 +100,26 @@ export default function ModalOrderRoom({
     });
   };
 
-  const { data: me } = useQuery(["get_me"], () => ApiUser.getMe());
+  const getMeMutation = useMutation(ApiUser.getMe);
+
+  const { user } = store.getState();
+
+  useEffect(() => {
+    if (user?.id) {
+      getMeMutation.mutate();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    getPromotionMutation.mutate(new Date());
+  }, []);
 
   return (
     <Formik
       innerRef={innerRef}
       initialValues={{
         ...initialValues,
-        ...me,
+        ...getMeMutation.data,
       }}
       enableReinitialize
       onSubmit={handleSubmit}
@@ -222,6 +248,12 @@ export default function ModalOrderRoom({
                               d >= formikProps.values.check_out
                             }
                             onChange={(date) => {
+                              getPromotionMutation.mutate(
+                                new Date(
+                                  date?.startOf("day").format("YYYY-MM-DD") ??
+                                    ""
+                                )
+                              );
                               formikProps.setFieldValue(
                                 "check_in",
                                 date?.startOf("day")
@@ -252,14 +284,43 @@ export default function ModalOrderRoom({
                         </FormItemGlobal>
                       </Col>
                     </Row>
-                    <span className="font-bold">
-                      Số tiền thanh toán:{" "}
-                      {calculateNight(
-                        formikProps.values.check_in,
-                        formikProps.values.check_out
-                      )}{" "}
-                      VNĐ
-                    </span>
+
+                    {!calculateNight(
+                      formikProps.values.check_in,
+                      formikProps.values.check_out
+                    ).diff ? (
+                      <>
+                        <span className="font-bold line-through">
+                          Giá gốc:{" "}
+                          {calculateNight(
+                            formikProps.values.check_in,
+                            formikProps.values.check_out
+                          ).current.toLocaleString()}{" "}
+                          VNĐ
+                        </span>
+
+                        <span className="font-bold ml-20">
+                          Số tiền thanh toán:{" "}
+                          {calculateNight(
+                            formikProps.values.check_in,
+                            formikProps.values.check_out
+                          ).discount.toLocaleString()}{" "}
+                          VNĐ
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="font-bold">
+                          Số tiền thanh toán:{" "}
+                          {calculateNight(
+                            formikProps.values.check_in,
+                            formikProps.values.check_out
+                          ).current.toLocaleString()}{" "}
+                          VNĐ
+                        </span>
+                      </>
+                    )}
+
                     <Divider />
                     <div className="mt-5">
                       <span className="font-bold">Phương thức thanh toán</span>

@@ -28,7 +28,7 @@ export interface IGetServicesRes {
 }
 
 function getServices(params?: IGetServicesParams): Promise<IGetServicesRes> {
-  return fetcher({ url: "services", method: "get", params });
+  return fetcher({ url: "services/find", method: "get", params });
 }
 
 export default {

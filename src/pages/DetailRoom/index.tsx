@@ -1,15 +1,14 @@
-import ApiRoom, { IRoomRes } from "@/api/ApiRoom";
+import ApiRoom from "@/api/ApiRoom";
 import "./index.scss";
 import { useQuery } from "@tanstack/react-query";
-import { Carousel, Col, Image, Row } from "antd";
+import { Col, Row } from "antd";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import AsNavFor from "./AsForNav/AsForNav";
 import SubHeader from "@/components/SubHeader/SubHeader";
 import { FaSquare, FaUsers } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaBed } from "react-icons/fa";
-import { FaRegSquare } from "react-icons/fa";
 import { FaRegClock } from "react-icons/fa";
 import { FaClock } from "react-icons/fa";
 import ModalOrderRoom from "@/components/ModalOrderRoom";
@@ -65,11 +64,7 @@ export default function DetailRoom() {
             <Col span={12}>
               <div className="div-1">
                 <h1>Mô tả</h1>
-                <p>
-                  Phòng Superior Double ấm cúng, gần gũi giống như một ngôi nhà.
-                  Với tầm nhìn đẹp, đây chắc chắn là hạng phòng lý tưởng cho các
-                  chuyến du lịch, công tác ngắn, dài ngày.
-                </p>
+                <p>{room?.description}</p>
                 <div className="service">
                   <span>Giá bao gồm các dịch vụ:</span>
                   <ul>
